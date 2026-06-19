@@ -16,9 +16,9 @@
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #ede7f6, #d1c4e9, #b39ddb); /* Tons de violeta */
+            background: linear-gradient(135deg, #fdfbfe 0%, #f7f1fb 50%, #f0e6f7 100%);
             position: relative;
-            overflow: hidden; /* Previne scrollbars da animação */
+            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -30,99 +30,72 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0; /* Atrás do conteúdo */
-            pointer-events: none; /* Não bloqueia cliques */
+            z-index: 0;
+            pointer-events: none;
         }
 
         .orb {
             position: absolute;
-            bottom: -150px; /* Começa fora da tela */
-            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            filter: blur(25px); /* Efeito de brilho suave */
-            animation: floatUp 20s infinite linear;
+            filter: blur(80px);
             will-change: transform, opacity;
+            opacity: 0.5;
+            animation: floatSlow 25s infinite ease-in-out alternate;
         }
 
-        .orb:nth-child(1) {
-            width: 80px; height: 80px;
-            left: 10%;
-            animation-duration: 25s;
-            animation-delay: 0s;
+        .orb-1 {
+            width: 320px; height: 320px;
+            background: radial-gradient(circle, rgba(186,104,200,0.22) 0%, rgba(186,104,200,0) 70%);
+            top: 10%; left: -10%;
+            animation-duration: 35s;
         }
-        .orb:nth-child(2) {
-            width: 120px; height: 120px;
-            left: 30%;
-            animation-duration: 20s;
-            animation-delay: 3s;
-            background: rgba(255, 255, 255, 0.15);
+
+        .orb-2 {
+            width: 450px; height: 450px;
+            background: radial-gradient(circle, rgba(255,213,79,0.15) 0%, rgba(255,213,79,0) 70%);
+            bottom: 5%; right: -10%;
+            animation-duration: 45s;
+            animation-delay: -5s;
         }
-        .orb:nth-child(3) {
-            width: 60px; height: 60px;
-            left: 55%;
+
+        .orb-3 {
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(129,212,250,0.15) 0%, rgba(129,212,250,0) 70%);
+            top: 45%; left: 35%;
             animation-duration: 30s;
-            animation-delay: 8s;
-        }
-        .orb:nth-child(4) {
-            width: 100px; height: 100px;
-            left: 75%;
-            animation-duration: 18s;
-            animation-delay: 1s;
-            background: rgba(255, 255, 255, 0.12);
-        }
-        .orb:nth-child(5) {
-            width: 90px; height: 90px;
-            left: 90%;
-            animation-duration: 22s;
-            animation-delay: 6s;
+            animation-delay: -10s;
         }
 
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0);
-                opacity: 0;
-            }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% {
-                transform: translateY(-110vh); /* Sobe até sumir */
-                opacity: 0;
-            }
+        @keyframes floatSlow {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(60px, -40px) scale(1.1); }
+            100% { transform: translate(-40px, 50px) scale(0.95); }
         }
-        /* --- Fim da Animação --- */
 
+        /* --- Animação do Pulso do Reiki --- */
+        @keyframes reikiPulse {
+            0% { box-shadow: 0 0 0 0 rgba(224, 64, 251, 0.4), 0 4px 15px rgba(224, 64, 251, 0.15); }
+            70% { box-shadow: 0 0 0 12px rgba(224, 64, 251, 0), 0 4px 15px rgba(224, 64, 251, 0.15); }
+            100% { box-shadow: 0 0 0 0 rgba(224, 64, 251, 0), 0 4px 15px rgba(224, 64, 251, 0.15); }
+        }
+        .btn-reiki-pulse {
+            animation: reikiPulse 2.5s infinite;
+        }
 
-        /* Estilo dos botões */
-        .btn {
-            transition: all 0.3s ease-in-out;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(5px);
-        }
-        .btn:hover {
-            transform: scale(1.03) translateY(-2px); /* Efeito de "levantar" */
-            box-shadow: 0 8px 25px rgba(69, 39, 160, 0.2);
-        }
-        .btn-primary {
-            background-color: #673ab7; /* Violeta principal */
-            color: white;
-        }
-        .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.4);
-            color: #4527a0; /* Violeta escuro para o texto */
-        }
+        /* Estilo dos créditos */
         .dev-credit {
             display: inline-block;
-            margin-top: 8px;
+            margin-top: 16px;
             font-size: 0.75rem;
-            color: rgba(69, 39, 160, 0.7);
+            color: rgba(103, 58, 183, 0.6);
             text-decoration: none;
             transition: color 0.3s ease;
         }
         .dev-credit:hover {
-            color: #4527a0;
+            color: rgba(103, 58, 183, 0.9);
         }
 
-        /* Garante que o conteúdo principal fique na frente da animação */
+        /* Garante que o conteúdo fique na frente dos orbs */
         main {
             position: relative;
             z-index: 1;
@@ -133,48 +106,58 @@
 
     <!-- Container da Animação -->
     <div class="orb-container">
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
     </div>
 
-    <!-- Container Principal -->
-    <main class="w-full max-w-md mx-auto">
-        <div class="bg-white/50 backdrop-blur-xl border border-white/20 rounded-3xl p-6 text-center shadow-2xl">
+    <!-- Container Principal (Double Bezel) -->
+    <main class="w-full max-w-md mx-auto p-1.5 bg-white/20 backdrop-blur-2xl border border-white/30 rounded-[2.5rem] shadow-[0_30px_60px_rgba(103,58,183,0.1)]">
+        <div class="bg-white/60 backdrop-blur-xl border border-white/50 rounded-[2.2rem] p-6 text-center shadow-[inset_0_1px_2px_rgba(255,255,255,0.75)]">
             
             <!-- Seção do Perfil -->
-            <header class="flex flex-col items-center mb-6">
-                <!-- Imagem de perfil atualizada para .png -->
-                <img 
-                    class="w-28 h-28 rounded-full object-cover border-4 border-white/50 shadow-lg mb-4" 
-                    src="images/perfil-laudiceia.png" 
-                    alt="Foto de Perfil de Laudiceia Leal"
-                    onerror="this.src='https://placehold.co/200x200/B39DDB/FFFFFF?text=LL'"
-                >
+            <header class="flex flex-col items-center mb-8">
+                <!-- Imagem de perfil com anel suave -->
+                <div class="relative p-1 rounded-full bg-white/50 border border-white/80 shadow-[0_10px_25px_rgba(103,58,183,0.15)] mb-4">
+                    <img 
+                        class="w-28 h-28 rounded-full object-cover border-2 border-white" 
+                        src="images/perfil-laudiceia.png" 
+                        alt="Foto de Perfil de Laudiceia Leal"
+                        onerror="this.src='https://placehold.co/200x200/B39DDB/FFFFFF?text=LL'"
+                    >
+                </div>
                 <h1 class="text-2xl font-bold text-gray-800 tracking-wide">Laudiceia Leal</h1>
-                <p class="text-md text-gray-700 font-light mt-1">Terapeuta Integrativa Sistêmica</p>
+                <p class="text-sm text-purple-900/80 font-medium mt-1 uppercase tracking-widest text-[10px]">Terapeuta Integrativa Sistêmica</p>
             </header>
 
             <!-- Seção de Links -->
             <section class="space-y-4 w-full">
-                <!-- Botão Destaque: Avaliação -->
-                <a href="https://wa.me/5565984694076?text=Olá!%20Gostaria%20de%20agendar%20uma%20Avaliação%20Personalizada." target="_blank" class="block btn btn-primary rounded-xl p-4 w-full text-center">
-                    <span class="font-semibold text-lg">Agendar Avaliação Personalizada</span>
+                <!-- Botão Principal: Avaliação -->
+                <a href="https://wa.me/5565984694076?text=Olá!%20Gostaria%20de%20agendar%20uma%20Avaliação%20Personalizada." target="_blank" class="flex items-center justify-between border border-purple-400 bg-gradient-to-r from-purple-700 to-indigo-700 text-white rounded-full pl-6 pr-2 py-2 w-full text-left group transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-[0_4px_15px_rgba(103,58,183,0.25)] hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(103,58,183,0.35)] active:scale-[0.98]">
+                    <span class="font-semibold text-md tracking-wide">Agendar Avaliação Personalizada</span>
+                    <span class="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white transition-all duration-500 group-hover:bg-white/25 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 font-bold">↗</span>
+                </a>
+
+                <!-- Botão Especial Destaque: Curso de Reiki Usui -->
+                <a href="https://wa.me/5565984694076?text=Olá!%20Gostaria%20de%20informações%20sobre%20o%20Curso%20de%20Reiki%20Usui%20Tibetano." target="_blank" class="relative flex items-center justify-between border border-fuchsia-400/50 bg-gradient-to-r from-indigo-600 via-purple-700 to-fuchsia-600 text-white rounded-full pl-6 pr-2 py-2 w-full text-left group transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-[0_4px_15px_rgba(224,64,251,0.2)] hover:scale-[1.02] hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(224,64,251,0.35)] active:scale-[0.98] btn-reiki-pulse">
+                    <span class="font-bold text-md tracking-wide">Curso de Reiki Usui <span class="text-[9px] font-semibold px-2 py-0.5 rounded-full bg-white/20 ml-1.5 uppercase tracking-wider text-white">Destaque</span></span>
+                    <span class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white transition-all duration-500 group-hover:bg-white/20 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 font-bold">↗</span>
                 </a>
 
                 <!-- Outros Botões -->
-                <a href="https://sitelau.netlify.app#services" target="_blank" class="block btn btn-secondary rounded-xl p-3 w-full text-center">
-                    <span class="font-semibold">Constelação Familiar e Terapias</span>
+                <a href="https://sitelau.netlify.app#services" target="_blank" class="flex items-center justify-between border border-white/80 bg-white/40 text-purple-950 rounded-full pl-6 pr-2 py-2 w-full text-left group transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-[0_2px_8px_rgba(103,58,183,0.05)] hover:bg-white/60 hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-[0_6px_15px_rgba(103,58,183,0.1)] active:scale-[0.98] hover:border-purple-200/50">
+                    <span class="font-medium text-md text-gray-800 group-hover:text-purple-950 transition-colors">Constelação Familiar e Terapias</span>
+                    <span class="w-10 h-10 rounded-full bg-purple-950/5 flex items-center justify-center text-purple-950 transition-all duration-500 group-hover:bg-purple-950/10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 font-bold">↗</span>
                 </a>
                 
-                <a href="https://sitelau.netlify.app#courses" target="_blank" class="block btn btn-secondary rounded-xl p-3 w-full text-center">
-                    <span class="font-semibold">Cursos e Vivências</span>
+                <a href="https://sitelau.netlify.app#courses" target="_blank" class="flex items-center justify-between border border-white/80 bg-white/40 text-purple-950 rounded-full pl-6 pr-2 py-2 w-full text-left group transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-[0_2px_8px_rgba(103,58,183,0.05)] hover:bg-white/60 hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-[0_6px_15px_rgba(103,58,183,0.1)] active:scale-[0.98] hover:border-purple-200/50">
+                    <span class="font-medium text-md text-gray-800 group-hover:text-purple-950 transition-colors">Cursos e Vivências</span>
+                    <span class="w-10 h-10 rounded-full bg-purple-950/5 flex items-center justify-center text-purple-950 transition-all duration-500 group-hover:bg-purple-950/10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 font-bold">↗</span>
                 </a>
 
-                <a href="https://sitelau.netlify.app#services" target="_blank" class="block btn btn-secondary rounded-xl p-3 w-full text-center">
-                    <span class="font-semibold">Barras de Access (Destaque)</span>
+                <a href="https://sitelau.netlify.app#services" target="_blank" class="flex items-center justify-between border border-white/80 bg-white/40 text-purple-950 rounded-full pl-6 pr-2 py-2 w-full text-left group transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] shadow-[0_2px_8px_rgba(103,58,183,0.05)] hover:bg-white/60 hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-[0_6px_15px_rgba(103,58,183,0.1)] active:scale-[0.98] hover:border-purple-200/50">
+                    <span class="font-medium text-md text-gray-800 group-hover:text-purple-950 transition-colors">Barras de Access</span>
+                    <span class="w-10 h-10 rounded-full bg-purple-950/5 flex items-center justify-center text-purple-950 transition-all duration-500 group-hover:bg-purple-950/10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 font-bold">↗</span>
                 </a>
             </section>
 
@@ -183,15 +166,15 @@
                 <div class="flex items-center justify-center space-x-6 mb-4">
                     <!-- Instagram -->
                     <a href="https://www.instagram.com/laudiceia_leal" target="_blank" class="transition-transform duration-300 hover:scale-110" aria-label="Instagram">
-                        <img src="images/instagram-preto.png" alt="Instagram" class="w-7 h-7 object-contain">
+                        <img src="images/instagram-preto.png" alt="Instagram" class="w-7 h-7 object-contain opacity-75 hover:opacity-100 transition-opacity">
                     </a>
                     <!-- WhatsApp -->
                     <a href="https://wa.me/5565984694076" target="_blank" class="transition-transform duration-300 hover:scale-110" aria-label="WhatsApp">
-                        <img src="images/whatsapp-preto.png" alt="WhatsApp" class="w-7 h-7 object-contain">
+                        <img src="images/whatsapp-preto.png" alt="WhatsApp" class="w-7 h-7 object-contain opacity-75 hover:opacity-100 transition-opacity">
                     </a>
                     <!-- Facebook -->
                     <a href="#" target="_blank" class="transition-transform duration-300 hover:scale-110" aria-label="Facebook">
-                       <img src="images/facebook-preto.png" alt="Facebook" class="w-7 h-7 object-contain">
+                       <img src="images/facebook-preto.png" alt="Facebook" class="w-7 h-7 object-contain opacity-75 hover:opacity-100 transition-opacity">
                     </a>
                 </div>
                 <a href="https://greinaldodigital.netlify.app" target="_blank" rel="noopener noreferrer" class="dev-credit">
